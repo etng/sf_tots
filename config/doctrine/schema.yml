@@ -1,0 +1,1572 @@
+---
+detect_relations: true
+options:
+  collation: utf8_unicode_ci
+  charset: utf8
+  type: MyISAM
+
+ttsArea:
+  tableName: tts_area
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    name:
+      type: string(55)
+      unique: true
+      notnull: true
+      comment:
+    description:
+      type: clob
+      notnull: true
+      comment:
+  relations:
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Areas
+#  indexes:
+#    fk_area_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsDestination:
+  tableName: tts_destination
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    area_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    name:
+      type: string(55)
+      unique: true
+      notnull: true
+      comment:
+    description:
+      type: clob
+      notnull: true
+      comment:
+  relations:
+    Area:
+      class: ttsArea
+      local: area_id
+      foreign: id
+      foreignAlias: Destinations
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Destinations
+#  indexes:
+#    fk_destination_area:
+#      fields: [area_id]
+#    fk_destination_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsAttraction:
+  tableName: tts_attraction
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    area_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    name:
+      type: string(55)
+      unique: true
+      notnull: true
+      comment:
+    description:
+      type: clob
+      notnull: true
+      comment:
+  relations:
+    Area:
+      class: ttsArea
+      local: area_id
+      foreign: id
+      foreignAlias: Attractions
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Attractions
+#  indexes:
+#    fk_attraction_area1:
+#      fields: [area_id]
+#    fk_attraction_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsHotel:
+  tableName: tts_hotel
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    destination_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    name:
+      type: string(55)
+      unique: true
+      notnull: true
+      comment:
+    description:
+      type: clob
+      notnull: true
+      comment:
+    phone:
+      type: string(55)
+      notnull: true
+      comment:
+    fax:
+      type: string(55)
+      notnull: true
+      comment:
+    star:
+      type: integer(1)
+      unsigned: true
+      notnull: true
+      default: 3
+      comment:
+  relations:
+    Destination:
+      class: ttsDestination
+      local: destination_id
+      foreign: id
+      foreignAlias: Hotels
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Hotels
+#  indexes:
+#    fk_hotel_destination1:
+#      fields: [destination_id]
+#    fk_hotel_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsRoom:
+  tableName: tts_room
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    hotel_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    room_type_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    quantity:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+    cost:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    public_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    min_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    max_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+  relations:
+    Hotel:
+      class: ttsHotel
+      local: hotel_id
+      foreign: id
+      foreignAlias: Rooms
+    RoomType:
+      class: ttsRoomType
+      local: room_type_id
+      foreign: id
+      foreignAlias: Rooms
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Rooms
+#  indexes:
+#    fk_room_hotel1:
+#      fields: [hotel_id]
+#    fk_room_room_type1:
+#      fields: [room_type_id]
+#    fk_room_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsRoomPrice:
+  tableName: tts_room_price
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    room_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    the_date:
+      type: date
+      notnull: true
+      comment:
+    remain_cnt:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+    cost:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    public_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    min_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    max_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    memo:
+      type: string(255)
+      notnull: true
+      comment:
+  relations:
+    Room:
+      class: ttsRoom
+      local: room_id
+      foreign: id
+      foreignAlias: RoomPrices
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: RoomPrices
+#  indexes:
+#    fk_room_price_room1:
+#      fields: [room_id]
+#    fk_room_price_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsRoomType:
+  tableName: tts_room_type
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    name:
+      type: string(55)
+      unique: true
+      notnull: true
+      comment:
+    average_cost:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    average_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    min_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    max_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    description:
+      type: clob
+      notnull: true
+      comment:
+  relations:
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: RoomTypes
+#  indexes:
+#    fk_room_type_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsRoutine:
+  tableName: tts_routine
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    destination_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    name:
+      type: string(55)
+      unique: true
+      notnull: true
+      comment:
+    distance:
+      type: decimal(8,2)
+      unsigned: true
+      notnull: true
+      comment:
+    cost:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    public_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    min_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    max_price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    description:
+      type: clob
+      notnull: true
+      comment:
+  relations:
+    Destination:
+      class: ttsDestination
+      local: destination_id
+      foreign: id
+      foreignAlias: Routines
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Routines
+#  indexes:
+#    fk_routine_destination1:
+#      fields: [destination_id]
+#    fk_routine_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsOrder:
+  tableName: tts_order
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    name:
+      type: string(14)
+      unique: true
+      notnull: true
+      fixed: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    hotel_staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    car_staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    tourist_cnt:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 1
+      comment:
+    need_hotel:
+      type: boolean
+      notnull: true
+      comment:
+    hotel_request:
+      type: string(255)
+      notnull: true
+      comment:
+    need_car:
+      type: boolean
+      notnull: true
+      comment:
+    car_request:
+      type: string(255)
+      notnull: true
+      comment:
+    need_receive:
+      type: boolean
+      notnull: true
+      default: false
+      comment:
+    need_sayoff:
+      type: boolean
+      notnull: true
+      default: false
+      comment:
+    hotel_status:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+    driver_status:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+    money_status:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+    total_status:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+    cost:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    price:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+  relations:
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Orders
+    HotelStaff:
+      class: ttsStaff
+      local: hotel_staff_id
+      foreign: id
+      foreignAlias: Orders
+    CarStaff:
+      class: ttsStaff
+      local: car_staff_id
+      foreign: id
+      foreignAlias: Orders
+#  indexes:
+#    fk_order_staff1:
+#      fields: [staff_id]
+#    fk_order_staff2:
+#      fields: [hotel_staff_id]
+#    fk_order_staff3:
+#      fields: [driver_staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsSchedule:
+  tableName: tts_schedule
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    order_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    routine_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    the_number:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    the_date:
+      type: date
+      notnull: true
+      comment:
+    need_room:
+      type: boolean
+      notnull: true
+      default: true
+      comment:
+    need_car:
+      type: boolean
+      notnull: true
+      default: true
+      comment:
+    room_status:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+    car_status:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+  relations:
+    Order:
+      class: ttsOrder
+      local: order_id
+      foreign: id
+      foreignAlias: Schedules
+    Routine:
+      class: ttsRoutine
+      local: routine_id
+      foreign: id
+      foreignAlias: Schedules
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Schedules
+#  indexes:
+#    fk_schedule_order1:
+#      fields: [order_id]
+#    fk_schedule_routine1:
+#      fields: [routine_id]
+#    fk_schedule_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsTodo:
+  tableName: tts_todo
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment: 编号
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment: 员工
+    type:
+      type: enum
+      values: ['flight','train','bus','ticket','passport','misc']
+      notnull: true
+      default: 'misc'
+      comment: 类型
+    name:
+      type: string(255)
+      notnull: true
+      comment:
+    the_date:
+      type: date
+      notnull: true
+      comment:
+    the_time:
+      type: time
+      notnull: true
+      comment:
+    data:
+      type: clob
+      notnull: true
+      comment:
+    memo:
+      type: string(255)
+      notnull: true
+      comment:
+    status:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+  relations:
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Todoes
+#  indexes:
+#    fk_event_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment: 待办事项
+
+ttsDriver:
+  tableName: tts_driver
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    name:
+      type: string(55)
+      notnull: true
+      comment:
+    nationality:
+      type: string(55)
+      notnull: true
+      comment:
+    age:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    phone:
+      type: string(55)
+      notnull: true
+      comment:
+    star:
+      type: integer(1)
+      unsigned: true
+      notnull: true
+      default: 3
+      comment:
+    description:
+      type: clob
+      notnull: true
+      comment:
+  relations:
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Drivers
+#  indexes:
+#    fk_driver_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsPayment:
+  tableName: tts_payment
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    order_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    subject:
+      type: string(255)
+      notnull: true
+      comment:
+    gateway:
+      type: enum
+      values: ['cash','bank','alipay']
+      notnull: true
+      default: 'cash'
+      comment:
+    from_account:
+      type: string(55)
+      notnull: true
+      comment:
+    dest_account:
+      type: string(55)
+      notnull: true
+      comment:
+    amount:
+      type: decimal(8,2)
+      notnull: true
+      comment:
+    client_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    memo:
+      type: clob
+      notnull: true
+      comment:
+  relations:
+    Order:
+      class: ttsOrder
+      local: order_id
+      foreign: id
+      foreignAlias: Payments
+    Client:
+      class: ttsClient
+      local: client_id
+      foreign: id
+      foreignAlias: Payments
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Payments
+#  indexes:
+#    fk_payment_order1:
+#      fields: [order_id]
+#    fk_payment_client1:
+#      fields: [client_id]
+#    fk_payment_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsScheduleRoomRequest:
+  tableName: tts_schedule_room_request
+  columns:
+    schedule_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    room_type_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    quantity:
+      type: integer
+      notnull: true
+      comment:
+    status:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+    memo:
+      type: clob
+      notnull: true
+      comment:
+  relations:
+    Schedule:
+      class: ttsSchedule
+      local: schedule_id
+      foreign: id
+      foreignAlias: ScheduleRoomRequests
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: ScheduleRoomRequests
+    RoomType:
+      class: ttsRoomType
+      local: room_type_id
+      foreign: id
+      foreignAlias: ScheduleRoomRequests
+#  indexes:
+#    fk_schedule_has_room_schedule1:
+#      fields: [schedule_id]
+#    fk_schedule_has_room_staff1:
+#      fields: [staff_id]
+#    fk_schedule_room_room_type1:
+#      fields: [room_type_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsScheduleCarRequest:
+  tableName: tts_schedule_car_request
+  columns:
+    schedule_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    car_model_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    quantity:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 1
+      comment:
+    status:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+    memo:
+      type: clob
+      notnull: true
+      comment:
+  relations:
+    Schedule:
+      class: ttsSchedule
+      local: schedule_id
+      foreign: id
+      foreignAlias: ScheduleCarRequests
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: ScheduleCarRequests
+    CarModel:
+      class: ttsCarModel
+      local: car_model_id
+      foreign: id
+      foreignAlias: ScheduleCarRequests
+#  indexes:
+#    fk_schedule_has_driver_schedule1:
+#      fields: [schedule_id]
+#    fk_schedule_has_driver_staff1:
+#      fields: [staff_id]
+#    fk_schedule_car_car_model1:
+#      fields: [car_model_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsOrderCar:
+  tableName: tts_order_car
+  columns:
+    order_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    car_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    cost:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    status:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+    memo:
+      type: clob
+      notnull: true
+      comment:
+  relations:
+    Order:
+      class: ttsOrder
+      local: order_id
+      foreign: id
+      foreignAlias: OrderCars
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: OrderCars
+    Car:
+      class: ttsCar
+      local: car_id
+      foreign: id
+      foreignAlias: OrderCars
+#  indexes:
+#    fk_order_has_driver_order1:
+#      fields: [order_id]
+#    fk_order_has_driver_staff1:
+#      fields: [staff_id]
+#    fk_order_has_car_car1:
+#      fields: [car_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsClient:
+  tableName: tts_client
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    account:
+      type: string(55)
+      unique: true
+      notnull: true
+      comment:
+    password:
+      type: string(32)
+      notnull: true
+      fixed: true
+      comment:
+    name:
+      type: string(55)
+      notnull: true
+      comment:
+    phone:
+      type: string(55)
+      notnull: true
+      comment:
+    email:
+      type: string(55)
+      notnull: true
+      comment:
+  relations:
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Clients
+#  indexes:
+#    fk_client_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsStaff:
+  tableName: tts_staff
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    account:
+      type: string(55)
+      unique: true
+      notnull: true
+      comment:
+    password:
+      type: string(32)
+      notnull: true
+      fixed: true
+      comment:
+    name:
+      type: string(55)
+      notnull: true
+      comment:
+    phone:
+      type: string(55)
+      notnull: true
+      comment:
+    email:
+      type: string(55)
+      notnull: true
+      comment:
+  options:
+    type: InnoDB
+    comment:
+
+ttsTourist:
+  tableName: tts_tourist
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment: 编号
+    name:
+      type: string(55)
+      notnull: true
+      comment: 姓名
+    idcard_type:
+      type: string(55)
+      notnull: true
+      comment: 证件类型
+    idcard:
+      type: string(55)
+      notnull: true
+      comment: 证件号码
+    gender:
+      type: enum
+      values: ['m','f','x']
+      notnull: true
+      default: 'x'
+      comment: 性别
+    phone:
+      type: string(55)
+      notnull: true
+      comment: 电话
+    email:
+      type: string(55)
+      notnull: true
+      comment: Email
+    memo:
+      type: clob
+      notnull: true
+      comment: 备注
+  indexes:
+    idcard:
+      fields:
+        idcard:
+          sorting: ASC
+        idcard_type:
+          sorting: ASC
+      type: unique
+  options:
+    type: InnoDB
+    comment: 游客
+
+ttsOrderTourist:
+  tableName: tts_order_tourist
+  columns:
+    order_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    tourist_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+  relations:
+    Order:
+      class: ttsOrder
+      local: order_id
+      foreign: id
+      foreignAlias: OrderTourists
+    Tourist:
+      class: ttsTourist
+      local: tourist_id
+      foreign: id
+      foreignAlias: OrderTourists
+#  indexes:
+#    fk_order_has_tourist_tourist1:
+#      fields: [tourist_id]
+#    fk_order_has_tourist_order1:
+#      fields: [order_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsCarModel:
+  tableName: tts_car_model
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    name:
+      type: string(55)
+      unique: true
+      notnull: true
+      comment:
+    description:
+      type: clob
+      notnull: true
+      comment:
+    capacity:
+      type: integer(1)
+      unsigned: true
+      notnull: true
+      default: 4
+      comment:
+  relations:
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: CarModels
+#  indexes:
+#    fk_car_model_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsCar:
+  tableName: tts_car
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    car_plate_number:
+      type: string(55)
+      unique: true
+      notnull: true
+      comment:
+    driver_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    car_model_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+  relations:
+    Driver:
+      class: ttsDriver
+      local: driver_id
+      foreign: id
+      foreignAlias: Cars
+    Model:
+      class: ttsCarModel
+      local: car_model_id
+      foreign: id
+      foreignAlias: Cars
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: Cars
+#  indexes:
+#    fk_car_driver1:
+#      fields: [driver_id]
+#    fk_car_car_model1:
+#      fields: [car_model_id]
+#    fk_car_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsStatus:
+  tableName: tts_status
+  columns:
+    id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      autoincrement: true
+      comment:
+    type:
+      type: enum
+      values: ['order','schedule','schedule_room','schedule_car', 'order_car','todo','order_money']
+      notnull: true
+      default: 'todo'
+      comment:
+    val:
+      type: integer
+      notnull: true
+      comment:
+    txt:
+      type: string(255)
+      notnull: true
+      comment:
+  options:
+    type: InnoDB
+    comment:
+
+ttsScheduleCar:
+  tableName: tts_schedule_car
+  columns:
+    schedule_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    car_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    cost:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+  relations:
+    Schedule:
+      class: ttsSchedule
+      local: schedule_id
+      foreign: id
+      foreignAlias: ScheduleCars
+    Car:
+      class: ttsCar
+      local: car_id
+      foreign: id
+      foreignAlias: ScheduleCars
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: ScheduleCars
+#  indexes:
+#    fk_schedule_has_car_car1:
+#      fields: [car_id]
+#    fk_schedule_has_car_schedule1:
+#      fields: [schedule_id]
+#    fk_schedule_car_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsScheduleRoom:
+  tableName: tts_schedule_room
+  columns:
+    schedule_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    room_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    staff_id:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+    cost:
+      type: integer
+      unsigned: true
+      notnull: true
+      comment:
+  relations:
+    Schedule:
+      class: ttsSchedule
+      local: schedule_id
+      foreign: id
+      foreignAlias: ScheduleRooms
+    Room:
+      class: ttsRoom
+      local: room_id
+      foreign: id
+      foreignAlias: ScheduleRooms
+    Staff:
+      class: ttsStaff
+      local: staff_id
+      foreign: id
+      foreignAlias: ScheduleRooms
+#  indexes:
+#    fk_schedule_has_room_room1:
+#      fields: [room_id]
+#    fk_schedule_has_room_schedule2:
+#      fields: [schedule_id]
+#    fk_schedule_room_staff1:
+#      fields: [staff_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsRoutineAttraction:
+  tableName: tts_routine_attraction
+  columns:
+    routine_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    attraction_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    sorting:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+  relations:
+    Routine:
+      class: ttsRoutine
+      local: routine_id
+      foreign: id
+      foreignAlias: RoutineAttractions
+    Attraction:
+      class: ttsAttraction
+      local: attraction_id
+      foreign: id
+      foreignAlias: RoutineAttractions
+#  indexes:
+#    fk_routine_has_attraction_attraction1:
+#      fields: [attraction_id]
+#    fk_routine_has_attraction_routine1:
+#      fields: [routine_id]
+  options:
+    type: InnoDB
+    comment:
+
+ttsRoutineDestination:
+  tableName: tts_routine_destination
+  columns:
+    routine_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    destination_id:
+      type: integer
+      primary: true
+      unsigned: true
+      notnull: true
+      comment:
+    sorting:
+      type: integer
+      unsigned: true
+      notnull: true
+      default: 0
+      comment:
+  relations:
+    Routine:
+      class: ttsRoutine
+      local: routine_id
+      foreign: id
+      foreignAlias: RoutineDestinations
+    Destination:
+      class: ttsDestination
+      local: destination_id
+      foreign: id
+      foreignAlias: RoutineDestinations
+#  indexes:
+#    fk_routine_has_destination_destination1:
+#      fields: [destination_id]
+#    fk_routine_has_destination_routine1:
+#      fields: [routine_id]
+  options:
+    type: InnoDB
+    comment:
